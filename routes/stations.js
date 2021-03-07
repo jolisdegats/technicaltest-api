@@ -4,13 +4,13 @@ const router = express.Router();
 const Station = require("../models/Station");
 
 // Create station
-router.put("/station/create", async (req, res) => {
+router.post("/station/create", async (req, res) => {
   try {
     const newstation = new Station({
       name: req.fields.name,
     });
     await newstation.save();
-    res.status(200).json({ message: "Station created" });
+    res.status(201).json({ message: "Station created" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -55,15 +55,20 @@ router.post("/station", async (req, res) => {
 // Delete station
 router.delete("/station/delete", async (req, res) => {
   try {
-    if (req.fields.id) {
-      const station = await Station.findById(req.fields.id);
-      station.cars.map(async (car) => {
-        car.update({ station: null });
-      });
-      await station.deleteOne();
-      res.json({ message: "station removed" });
+    if (req.fields.station_id) {
+      const station = await Station.findById(req.fields.station_id);
+      if (station) {
+        station.cars.map(async (car) => {
+          const updatedCar = car.findById(car._id);
+          updatedCar.update({ station: null });
+        });
+        await station.deleteOne();
+        res.status(200).json({ message: "Station removed" });
+      } else {
+        res.status(400).json({ message: "Missing id" });
+      }
     } else {
-      res.status(400).json({ message: "Missing id" });
+      res.status(404).json({ message: "Car not found" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

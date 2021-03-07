@@ -5,24 +5,21 @@ const Car = require("../models/Car");
 const Station = require("../models/Station");
 
 // Create car
-router.put("/car/create", async (req, res) => {
+router.post("/car/create", async (req, res) => {
   try {
     const carStation = await Station.findById(req.fields.station_id);
-    if (carStation) {
-      const newCar = new Car({
-        name: req.fields.name,
-        available: req.fields.available,
-        station: carStation,
-      });
-      const savedCar = await newCar.save();
 
+    const newCar = new Car({
+      name: req.fields.name,
+      available: req.fields.available,
+      station: carStation,
+    });
+    const savedCar = await newCar.save();
+    if (carStation) {
       carStation.update({ cars: carStation.cars.push(savedCar) });
       await carStation.save();
-
-      res.status(200).json({ message: "Car created" });
-    } else {
-      res.status(400).json({ error: "This station does not exist" });
     }
+    res.status(201).json({ message: "Car created" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -78,14 +75,16 @@ router.post("/car", async (req, res) => {
   }
 });
 
-// TODO
 // Delete car
 router.delete("/car/delete", async (req, res) => {
   try {
-    if (req.fields.id) {
-      const car = await Car.findById(req.fields.id);
+    if (req.fields.car_id) {
+      const car = await Car.findById(req.fields.car_id);
       const station = await Station.findById(car.station);
-      station.update({ cars: cars.splice(station.cars.indexOf(car.id), 1) });
+      station.update({
+        cars: station.cars.pull({ _id: car._id }),
+      });
+      console.log(station);
       await car.deleteOne();
       res.status(200).json({ message: "Car removed" });
     } else {

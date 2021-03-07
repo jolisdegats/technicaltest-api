@@ -17,6 +17,16 @@ const stationRoutes = require("./routes/stations");
 app.use(stationRoutes);
 
 // CONNECT TO BDD
+if (process.env.NODE_ENV === "test") {
+  mongoose.connect(process.env.MONGODB_URI + "-test", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
+
+  //   Tried to add a "dropDatabase" here but unsuccessful
+}
+
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
