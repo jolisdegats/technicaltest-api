@@ -1,15 +1,20 @@
-Install the project
-Clone this repository :
-git clone https://github.com/jolisdegats/technicaltest-api
+<h1>Technical test</h1>
+<br/>
 
-Run npm i to install dependencies
+
+<h3>Install the project</h3>
+Clone this repository :
+<code>git clone https://github.com/jolisdegats/technicaltest-api</code>
+
+Run <code>npm install</code> to install dependencies
 
 Add a .env file in the root folder with the following info :
-PORT=5000
+<code>PORT=5000
 NODE_ENV=development
 MONGODB_URI="mongodb://localhost/technicaltest"
+</code>
 
-To start the project, run "node index.js"
+To start the project, run <code>npm run start</code>
 Default port is 5000.
 
-To launch the tests, run "npm run test"
+To launch the tests, run <code>npm run test</code>
