@@ -71,9 +71,9 @@ Also remove car from station<br/>
 
 <br/>
 <h4>Issues I spotted with my code so far and various comments:</h4>
-<li>* Delete route for car does not check if station exists. Should have a if(station) after looking for station.</li>
-<li>* Update car route does not save car in the new station and does not remove it from previous station. Should have added push and pull actions on cars arrays.</li>
-<li>* On test env connects to two database (local and local-test). Should have added a if/else for NODE_ENV === "test" + create blank database with dummy data. Couldn't create Update and Delete routes tests as I couldn't get the ObjectIds of elements in the db.</li>
-<li>* Inconsistencies in my variables names (sometimes called station_id or car_id or just id).</li>
-<li>* Wish I would have more experience with tests. I feel like I lost way too much much time on them.</li>
-<li>* Forgot to add this "routes index" in my README.md before sending the test. I thought it could help you navigate more easily through my project though so I added it afterwards!</li>
+<li>Delete route for car does not check if station exists. Should have a if(station) after looking for station.</li>
+<li>Update car route does not save car in the new station and does not remove it from previous station. Should have added push and pull actions on cars arrays.</li>
+<li>On test env connects to two database (local and local-test). Should have added a if/else for NODE_ENV === "test" + create blank database with dummy data. Couldn't create Update and Delete routes tests as I couldn't get the ObjectIds of elements in the db.</li>
+<li>Inconsistencies in my variables names (sometimes called station_id or car_id or just id).</li>
+<li>Wish I would have more experience with tests. I feel like I lost way too much much time on them.</li>
+<li>Forgot to add this "routes index" in my README.md before sending the test. I thought it could help you navigate more easily through my project though so I added it afterwards!</li>
