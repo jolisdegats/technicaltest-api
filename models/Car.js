@@ -15,6 +15,7 @@ const Car = mongoose.model("Car", {
   available: {
     type: Boolean,
     required: true,
+    default: false,
   },
   station: {
     type: mongoose.Schema.Types.ObjectId,

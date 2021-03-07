@@ -60,6 +60,7 @@ router.post("/car", async (req, res) => {
         car.available = req.fields.available;
       }
       if (req.fields.station_id !== car.station_id) {
+        // TO DO
         const carStation = Station.findById(req.fields.station_id);
         if (carStation) {
           car.station = carStation;
