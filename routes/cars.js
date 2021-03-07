@@ -80,13 +80,15 @@ router.delete("/car/delete", async (req, res) => {
   try {
     if (req.fields.car_id) {
       const car = await Car.findById(req.fields.car_id);
-      const station = await Station.findById(car.station);
-      station.update({
-        cars: station.cars.pull({ _id: car._id }),
-      });
-      console.log(station);
-      await car.deleteOne();
-      res.status(200).json({ message: "Car removed" });
+      if (car) {
+        const station = await Station.findById(car.station);
+        station.cars = station.cars.pull({ _id: car._id });
+        await station.save();
+        await car.deleteOne();
+        res.status(200).json({ message: "Car removed" });
+      } else {
+        res.status(404).json({ message: "Car not found" });
+      }
     } else {
       res.status(400).json({ message: "Missing id" });
     }

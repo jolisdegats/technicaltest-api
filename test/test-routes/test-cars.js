@@ -13,7 +13,6 @@ it("2.1 Should add new car", () => {
     })
     .catch((err) => {
       expect.fail();
-      console.log(err);
     });
 });
 

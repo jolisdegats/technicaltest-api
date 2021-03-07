@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Station = require("../models/Station");
+const Car = require("../models/Car");
 
 // Create station
 router.post("/station/create", async (req, res) => {
@@ -59,8 +60,9 @@ router.delete("/station/delete", async (req, res) => {
       const station = await Station.findById(req.fields.station_id);
       if (station) {
         station.cars.map(async (car) => {
-          const updatedCar = car.findById(car._id);
-          updatedCar.update({ station: null });
+          const updatedCar = await Car.findById(car._id);
+          updatedCar.station = null;
+          await updatedCar.save();
         });
         await station.deleteOne();
         res.status(200).json({ message: "Station removed" });
